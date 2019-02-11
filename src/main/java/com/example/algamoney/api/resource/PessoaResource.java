@@ -16,37 +16,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.example.algamoney.api.model.Categoria;
-import com.example.algamoney.api.repository.CategoriaRepository;
+import com.example.algamoney.api.model.Pessoa;
+import com.example.algamoney.api.repository.PessoaRepository;
 
 @RestController
-@RequestMapping("/categorias")
-public class CategoriaResource {
-
+@RequestMapping("/pessoas")
+public class PessoaResource {
+	
 	@Autowired
-	private CategoriaRepository categoriaRepository;
-
+	private PessoaRepository pessoaRepository;
+	
 	@GetMapping
-	public List<Categoria> listar() {
-		return categoriaRepository.findAll();
+	public List<Pessoa> listar() {
+		return pessoaRepository.findAll();
 	}
 	
 	@GetMapping("/{codigo}")
-	public ResponseEntity<Categoria> buscarPeloCodigo(@PathVariable Long codigo) {
-		Categoria categoria = categoriaRepository.findOne(codigo); 
-		return categoria != null ? ResponseEntity.ok(categoria) : ResponseEntity.notFound().build();
+	public ResponseEntity<Pessoa> buscarPeloCodigo(@PathVariable Long codigo) {
+		Pessoa pessoa = pessoaRepository.findOne(codigo);
+		return pessoa != null ? ResponseEntity.ok(pessoa) : ResponseEntity.notFound().build();
 	}
-
+	
 	@PostMapping
-	public ResponseEntity<Categoria> criar(@Valid @RequestBody Categoria categoria, HttpServletResponse response) {
-		Categoria categoriaSalva = categoriaRepository.save(categoria);
+	public ResponseEntity<?> criar(@Valid @RequestBody Pessoa pessoa, HttpServletResponse response) {
+		Pessoa pessoaSalva = pessoaRepository.save(pessoa);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri()
-				.path("/{codigo}")
-				.buildAndExpand(categoriaSalva.getCodigo())
+				.path("/codigo")
+				.buildAndExpand(pessoaSalva.getCodigo())
 				.toUri();
 		response.setHeader("Location", uri.toASCIIString());
 		
-		return ResponseEntity.created(uri).body(categoriaSalva);
+		return ResponseEntity.created(uri).body(pessoaSalva);
 	}
 }

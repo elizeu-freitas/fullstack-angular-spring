@@ -1,5 +1,6 @@
 package com.example.algamoney.api.model;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,22 +10,27 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name="categoria")
-public class Categoria {
+@Table(name = "pessoa")
+public class Pessoa {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long codigo;
+	Long codigo;
 	
 	@NotNull
-	@Size(min = 3, max = 20)
-	private String nome;
+	@Size(min = 3, max = 30)
+	String nome;
+	
+	boolean ativo;
+	
+	@Embedded
+	Endereco endereco;
 	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (codigo ^ (codigo >>> 32));
+		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
 		return result;
 	}
 	@Override
@@ -35,16 +41,19 @@ public class Categoria {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
-		if (codigo != other.codigo)
+		Pessoa other = (Pessoa) obj;
+		if (codigo == null) {
+			if (other.codigo != null)
+				return false;
+		} else if (!codigo.equals(other.codigo))
 			return false;
 		return true;
 	}
 	
-	public long getCodigo() {
+	public Long getCodigo() {
 		return codigo;
 	}
-	public void setCodigo(long codigo) {
+	public void setCodigo(Long codigo) {
 		this.codigo = codigo;
 	}
 	public String getNome() {
@@ -52,5 +61,17 @@ public class Categoria {
 	}
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	public boolean isAtivo() {
+		return ativo;
+	}
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+	public Endereco getEndereco() {
+		return endereco;
+	}
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 }
