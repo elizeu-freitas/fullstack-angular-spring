@@ -39,14 +39,10 @@ public class RefreshTokenCookiePreProcessorFilter implements Filter{
 	
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	static class MyServletRequestWrapper extends HttpServletRequestWrapper {
