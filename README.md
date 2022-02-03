@@ -1,6 +1,6 @@
 # fullstack-angular-spring
 
-https://www49.bb.com.br/
+https://www49.bb.com.br/m
 
 (pt-br) Projeto desenvolvido para o curso da AlgaWorks: Fullstack Angular e Spring
 
